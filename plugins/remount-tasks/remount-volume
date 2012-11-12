@@ -2,18 +2,17 @@
 # Mostly copied from the create-volume task
 
 # Get a random device letter, we will hang forever if we try to attach a volume to an already mapped device.
-device_letter=`cat /dev/urandom| tr -dc 'f-p'|head -c 1`
-while [ -b "/dev/xvd$device_letter" ]; do
-	device_letter=`cat /dev/urandom| tr -dc 'f-p'|head -c 1`
+for device_letter in {f..z}; do
+	device_path="/dev/xvd$device_letter"
+	[ ! -b $device_path ] && break
 done
-device="/dev/sd$device_letter"
-device_path="/dev/xvd$device_letter"
+[ -b $device_path ] && die "No free device letters found (tried sdf to sdz)!"
 
 logn "Reattaching the bootstrapped volume"
 attachment_status=`ec2-attach-volume "$volume_id" \
 	--instance "$instance_id" --device "$device" | grep 'attached' || true`
 # Wait until the volume is attached
-dotdot "$attachment_status" "ec2dvol $volume_id -F 'attachment.status=attached' || true"
+dotdot "test -b $device_path && echo attached"
 
 # Recreate the imagedir, it was delete in the unmount task
 log "Creating mount location ${imagedir}"

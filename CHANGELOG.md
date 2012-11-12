@@ -1,3 +1,9 @@
+### 2012-11-12 Anders Ingemann <anders@ingemann.de> ###
+
+#### Minor changes: ####
+* Added regions: ap-southeast-2 (Australia)
+* Changed the way `11-attach-volume` finds a free device letter
+
 ### 2012-11-10 Anders Ingemann <anders@ingemann.de> ###
 
 #### Major changes: ####
