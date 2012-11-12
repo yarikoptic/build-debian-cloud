@@ -9,9 +9,6 @@ done
 device="/dev/sd$device_letter"
 device_path="/dev/xvd$device_letter"
 
-# Double check that the device name is not taken
-[ -n "`df | grep $device_path`" ] && die "Something is already attached to $device_path."
-
 attachment_status=`ec2-attach-volume "$volume_id" \
 	--instance "$instance_id" --device "$device" | grep 'attached' || true`
 # Wait until the volume is attached
