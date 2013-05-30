@@ -21,7 +21,7 @@ default ${GRUB_DEFAULT}
 timeout ${GRUB_TIMEOUT}
 EOF
 
-if ! ${GRUB_HIDDEN_TIMEOUT:-false}; then
+if ${GRUB_HIDDEN_TIMEOUT:-false}; then
 	printf "hiddenmenu\n"
 fi
 
