@@ -33,5 +33,8 @@ The following is a list of external plugins you can use with build-debian-cloud.
 * [debian-cloud-chef](https://github.com/tmatilai/debian-cloud-chef)  
   Installs [Opscode Chef](http://www.opscode.com/chef/) client using the Omnibus installer.
 
-That's it for now. If you have made a plugin for build-debian-cloud and would like to share it,
+* [debian-cloud-rightscale](https://github.com/sitepoint/debian-cloud-rightscale)  
+  Installs [RightLink](http://support.rightscale.com/12-Guides/RightLink) by RightScale.
+
+If you have made a plugin for build-debian-cloud and would like to share it,
 send me a pull request or drop me an email.
