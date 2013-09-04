@@ -6,7 +6,7 @@ Plugin is defined in the manifest file, plugin section with:
 
     "image_commands": {
         "enabled": true,
-        "cmd": [ [ "echo", "hello" ]],
+        "cmd": [ [ "touch", "/var/www/index.html" ]],
         "script": [ "/home/myscript.sh" ]
     }
 

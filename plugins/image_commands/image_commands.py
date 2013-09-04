@@ -15,8 +15,10 @@ class ImageExecuteCommand(Task):
             return
         from common.tools import log_check_call
 
-        for cmd in info.manifest.plugins['image_commands']['cmd']:
-            log_check_call(['/usr/sbin/chroot', info.root].extend(cmd))
+        for user_cmd in info.manifest.plugins['image_commands']['cmd']:
+            chroot_cmd = ['/usr/sbin/chroot', info.root]
+	    chroot_cmd.extend(user_cmd)
+            log_check_call(chroot_cmd)
 
 
 
@@ -36,7 +38,7 @@ class ImageExecuteScript(Task):
         from shutil import copy
         from common.tools import log_check_call
 
-        for script in info.manifest.plugins['image_commands']['scripts']:
+        for script in info.manifest.plugins['image_commands']['script']:
             script_src = os.path.normpath(script)
             script_dst = os.path.join(info.root, 'tmp/'+os.path.basename(script_src))
             copy(script_src, script_dst)
