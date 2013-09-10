@@ -26,7 +26,13 @@ class VagrantConfig(Task):
                         os.path.join(info.root,'root/.ssh')])
         authorized_keys = os.path.join(info.root,
                             'root/.ssh/authorized_keys')
-        copy(ssh_pub, authorized_keys)
+        if "vagrant" in info.manifest and \
+           "key.public" in info.manifest['vagrant']:
+            f = open(authorized_keys,"a")
+            f.write(info.manifest['vagrant']['key.public']+"\n")
+            f.close()
+        else:
+            copy(ssh_pub, authorized_keys)
         log_check_call(['/usr/sbin/chroot', info.root,
                         '/bin/chmod', '600', '/root/.ssh/authorized_keys'])
 
