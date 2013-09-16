@@ -15,7 +15,7 @@ class CreateBox(Task):
 class VagrantPackages(Task):
         description = 'Determining required image packages'
         phase = phases.preparation
-        after = [VirtualBoxImagePackages]
+        after = [ VirtualBoxImagePackages ]
 
         def run(self, info):
                 manifest = info.manifest
@@ -31,9 +31,9 @@ class VagrantUser(Task):
 	def run(self, info):
         	from common.tools import log_check_call
                 log_check_call(['/usr/sbin/chroot', info.root,
-                        '/usr/sbin/groupadd','admin'])
+                        '/usr/sbin/groupadd', 'admin'])
 		log_check_call(['/usr/sbin/chroot', info.root,
-			'/usr/sbin/useradd','-G','admin','vagrant'])
+			'/usr/sbin/useradd', '-G', 'admin', '-m', 'vagrant'])
                 log_check_call(['/usr/sbin/chroot', info.root,
 			'/usr/sbin/chpasswd'],
                         'vagrant:vagrant')
@@ -52,10 +52,15 @@ class VagrantHostname(Task):
 	f = open(hostname_file,"w")
         f.write("vagrant-debian")
 	f.close()
+        from common.tools import sed_i
+        hosts_file = os.path.join(info.root,'etc/hosts')
+        sed_i(hosts_file, 'localhost', 'localhost vagrant-debian')
+
     
 class VagrantConfig(Task):
     description = 'Customize image for Vagrant'
     phase = phases.system_modification
+    after = [ VagrantUser]
 
     def run(self, info):
         from shutil import copy
@@ -64,9 +69,9 @@ class VagrantConfig(Task):
 
         from common.tools import log_check_call
         log_check_call(['/bin/mkdir', '-p',
-                        os.path.join(info.root,'root/.ssh')])
+                        os.path.join(info.root,'vagrant/.ssh')])
         authorized_keys = os.path.join(info.root,
-                            'root/.ssh/authorized_keys')
+                            'vagrant/.ssh/authorized_keys')
         if 'key.public' in info.manifest.vagrant:
             f = open(authorized_keys,"a")
             f.write(info.manifest['vagrant']['key.public']+"\n")
