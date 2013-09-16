@@ -25,6 +25,7 @@ def tasks(tasklist, manifest):
 	tasklist.add(packages.HostPackages(),
 	             common_packages.HostPackages(),
 	             packages.ImagePackages(),
+		     pack.VagrantPackages(),
 	             common_packages.ImagePackages(),
 	             host.CheckPackages(),
 
@@ -50,7 +51,9 @@ def tasks(tasklist, manifest):
 	             security.EnableShadowConfig(),
 	             security.DisableSSHPasswordAuthentication(),
 	             security.DisableSSHDNSLookup(),
-                 pack.VagrantConfig(),
+	             pack.VagrantConfig(),
+	             pack.VagrantHostname(),
+	             pack.VagrantUser(),
 	             network.RemoveDNSInfo(),
 	             network.ConfigureNetworkIF(),
 	             network.ConfigureDHCP(),
@@ -67,7 +70,7 @@ def tasks(tasklist, manifest):
 	             parted.UnmapPartitions(),
 	             loopback.Detach(),
 	             filesystem.DeleteMountDir(),
-                 pack.CreateBox())
+                     pack.CreateBox())
 
 	if manifest.bootstrapper['tarball']:
 		tasklist.add(bootstrap.MakeTarball())

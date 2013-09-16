@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
-	"title": "VirtualBox manifest",
+	"title": "Vagrant manifest",
 	"type": "object",
 	"properties": {
 		"volume": {
@@ -9,17 +9,16 @@
 				"filesystem": {
 					"type": "string",
 					"enum": ["ext2", "ext3", "ext4", "xfs"]
-				},
+				}
 			},
 			"required": ["filesystem"]
 		},
-        "vagrant": {
-            "type": "object",
-            "properties": {
-                "key.private": { "type": "string" },
-                "key.public": { "type": "string" }
-            }
-        }
+                "vagrant": {
+                        "type": "object",
+                        "properties": {
+                                "key.public": { "type": "string" }
+                        }
+                }
 	},
-	"required": ["volume"]
+	"required": ["volume","vagrant"]
 }
