@@ -20,7 +20,6 @@ from providers.virtualbox.tasks import packages
 def initialize():
 	pass
 
-
 def tasks(tasklist, manifest):
 	tasklist.add(packages.HostPackages(),
 	             common_packages.HostPackages(),

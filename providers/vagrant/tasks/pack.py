@@ -23,6 +23,9 @@ class VagrantPackages(Task):
 		include.add('ruby')
 		include.add('rubygems')
 		include.add('sudo')
+		include.add('build-essential')
+		include.add('linux-headers-'+manifest.system['architecture'])
+
 
 class VagrantUser(Task):
 	description = 'Create default vagrant user'
@@ -41,6 +44,7 @@ class VagrantUser(Task):
 		f = open(sudoer,"w")
 		f.write("%admin ALL=(ALL) NOPASSWD: ALL\n")
 		f.close()
+
 
 
 class VagrantHostname(Task):
@@ -69,15 +73,36 @@ class VagrantConfig(Task):
 
         from common.tools import log_check_call
         log_check_call(['/bin/mkdir', '-p',
-                        os.path.join(info.root,'vagrant/.ssh')])
+                        os.path.join(info.root,'home/vagrant/.ssh')])
+        #log_check_call(['/bin/mkdir', '-p',
+        #                os.path.join(info.root,'root/.ssh')])
+
         authorized_keys = os.path.join(info.root,
-                            'vagrant/.ssh/authorized_keys')
+                            'home/vagrant/.ssh/authorized_keys')
         if 'key.public' in info.manifest.vagrant:
             f = open(authorized_keys,"a")
             f.write(info.manifest['vagrant']['key.public']+"\n")
             f.close()
         else:
             copy(ssh_pub, authorized_keys)
+	
+
+        #authorized_keys = os.path.join(info.root,
+        #                    'root/.ssh/authorized_keys')
+        #if 'key.public' in info.manifest.vagrant:
+        #    f = open(authorized_keys,"a")
+        #    f.write(info.manifest['vagrant']['key.public']+"\n")
+        #    f.close()
+        #else:
+        #    copy(ssh_pub, authorized_keys)
+
+
         log_check_call(['/usr/sbin/chroot', info.root,
-                        '/bin/chmod', '600', '/root/.ssh/authorized_keys'])
+            '/bin/chmod', '600', '/home/vagrant/.ssh/authorized_keys'])
+        log_check_call(['/usr/sbin/chroot', info.root,
+            '/bin/chown', '-R', 'vagrant', '/home/vagrant/.ssh'])
+
+        #log_check_call(['/usr/sbin/chroot', info.root,
+        #    '/bin/chmod', '600', '/root/.ssh/authorized_keys'])
+
 
