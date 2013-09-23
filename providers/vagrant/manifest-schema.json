@@ -13,12 +13,12 @@
 			},
 			"required": ["filesystem"]
 		},
-                "vagrant": {
-                        "type": "object",
-                        "properties": {
-                                "key.public": { "type": "string" }
-                        }
-                }
+		"vagrant": {
+			"type": "object",
+			"properties": {
+				"key.public": { "type": "string" }
+			}
+		}
 	},
 	"required": ["volume","vagrant"]
 }
