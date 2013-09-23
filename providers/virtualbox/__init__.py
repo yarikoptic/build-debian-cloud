@@ -1,5 +1,6 @@
 from manifest import Manifest
 from tasks import packages
+from tasks import network as vbnetwork
 from common.tasks import packages as common_packages
 from common.tasks import host
 from common.tasks import loopback
@@ -51,6 +52,7 @@ def tasks(tasklist, manifest):
 	             security.DisableSSHPasswordAuthentication(),
 	             security.DisableSSHDNSLookup(),
 	             network.RemoveDNSInfo(),
+	             vbnetwork.ConfigureNetwork(),
 	             network.ConfigureNetworkIF(),
 	             network.ConfigureDHCP(),
 	             initd.ResolveInitScripts(),
