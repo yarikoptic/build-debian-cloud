@@ -16,15 +16,16 @@ from common.tasks import cleanup
 from common.tasks import loopback
 from providers.virtualbox.tasks import boot
 from providers.virtualbox.tasks import packages
+from providers.virtualbox.tasks import network as vbnetwork
 
 def initialize():
 	pass
-
 
 def tasks(tasklist, manifest):
 	tasklist.add(packages.HostPackages(),
 	             common_packages.HostPackages(),
 	             packages.ImagePackages(),
+	             pack.VagrantPackages(),
 	             common_packages.ImagePackages(),
 	             host.CheckPackages(),
 
@@ -50,8 +51,11 @@ def tasks(tasklist, manifest):
 	             security.EnableShadowConfig(),
 	             security.DisableSSHPasswordAuthentication(),
 	             security.DisableSSHDNSLookup(),
-                 pack.VagrantConfig(),
+	             pack.VagrantConfig(),
+	             pack.VagrantHostname(),
+	             pack.VagrantUser(),
 	             network.RemoveDNSInfo(),
+	             vbnetwork.ConfigureNetwork(),
 	             network.ConfigureNetworkIF(),
 	             network.ConfigureDHCP(),
 	             initd.ResolveInitScripts(),
@@ -67,7 +71,7 @@ def tasks(tasklist, manifest):
 	             parted.UnmapPartitions(),
 	             loopback.Detach(),
 	             filesystem.DeleteMountDir(),
-                 pack.CreateBox())
+	             pack.CreateBox())
 
 	if manifest.bootstrapper['tarball']:
 		tasklist.add(bootstrap.MakeTarball())
