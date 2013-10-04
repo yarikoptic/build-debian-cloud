@@ -1,5 +1,23 @@
+Vagrant provider
+================
+
+This provider creates a vmdk file to be used in vagrant box.
+It uses a default vagrant user with sudo priviledges. VirtualBox additions are
+not installed as package is in contrib.
+
+Schema
+======
+
+        "vagrant": {
+            "type": "object",
+            "properties": {
+                "key.public": { "type": "string" }
+            }
+        }
 
 
+A vagrant/key.public key is available to use a specific key instead of default
+insecure (but default) Vagrant key.
 
 
 Vagrant box creation
