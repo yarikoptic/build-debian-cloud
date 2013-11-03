@@ -1,7 +1,7 @@
 build-debian-cloud python version (preview)
 ===========================================
 
-This is a preview of the build-debian-cloud python version.  
+This is a preview of the build-debian-cloud Python version.
 It currently only supports EBS booted volumes and none of the plugins have been ported.
 
 Suggestions
@@ -13,10 +13,10 @@ Pull requests are also welcome!
 
 Dependencies
 ------------
-You will need to run debian wheezy with **python 2.7** and **debootstrap** installed.
+You will need to run Debian wheezy with **python 2.7** and **debootstrap** installed.
 Also the following python libraries are required:
 * **boto**
-* **jsomschema** ([version 2.0.0](https://pypi.python.org/pypi/jsonschema), only available through pip)
+* **jsonschema** ([version 2.0.0](https://pypi.python.org/pypi/jsonschema), available through pip or in >= jessie)
 * **termcolor**
 
 Bootstrapping instance store AMIs requires **euca2ools** to be installed.
