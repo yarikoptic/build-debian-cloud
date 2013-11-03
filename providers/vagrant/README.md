@@ -2,7 +2,7 @@ Vagrant provider
 ================
 
 This provider creates a vmdk file to be used in vagrant box.
-It uses a default vagrant user with sudo priviledges. VirtualBox additions are
+It uses a default vagrant user with sudo privileges. VirtualBox additions are
 not installed as package is in contrib.
 
 Schema
@@ -24,9 +24,10 @@ Vagrant box creation
 ====================
 
 
-For the moment the provider does to create the vagrant box but only the vmdk
+For the moment the provider does not create the vagrant box but only the vmdk
 file needed to created the vagrant box.
-to create the box, one need virtualbox and vagrant installed, then run the
+
+To create the box, one need virtualbox and vagrant installed, then run the
 following script:
 
     #!/bin/bash
